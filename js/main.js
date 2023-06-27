@@ -6,14 +6,20 @@ document.addEventListener("DOMContentLoaded", () => {
     /* *********************************** DONNEES *************************************/
     /***********************************************************************************/
 
-    const decompters = document.getElementById("billboard");
+    const decompters = document.querySelector("#billboard span");
 
     const launchRocket = document.getElementById("rocket");
 
     const firingStart = document.getElementById("firing-button");
 
-    let millisecondes = 10;
+    const firingStop = document.getElementById("cancel-button");
+    
+    const firingReset = document.getElementById("refresh-button");
+
+
     let secondes = 10;
+    let timeOutId = 1000;
+    let interval;
 
     /***********************************************************************************/
     /* ********************************** FONCTIONS ************************************/
@@ -23,42 +29,51 @@ document.addEventListener("DOMContentLoaded", () => {
 
         interval = setInterval(() => {
 
-            firingStart.disabled = true;
-            millisecondes = parseInt(millisecondes);
+            firingStart.classList.add("disabled");
             secondes = parseInt(secondes);
 
-            millisecondes--;
-
-            if (millisecondes > 10) {
-                millisecondes = 0;
+            if (secondes > 0) {
                 secondes--;
             }
-            if (secondes > 0) {
-                secondes = 0;
-                minutes--;
+            else if (secondes === 0) {
+                rocket.src = "images/rocket3.gif";
+                rocket.classList.add("tookOff");
             }
 
-        });
-    };
+            secondes = (secondes < 10) ? "0" + secondes : secondes;
 
-        let launchInCloudRocket = () => {
-
-        };
-
-        launchInCloudRocket();
-        /************************************************************************************/
-        /* ******************************** CODE PRINCIPAL **********************************/
-        /************************************************************************************/
-
-        firingStart.addEventListener("click", () => {
+            decompters.innerText = (`${secondes}`);
 
             launchRocket.src = "images/rocket2.gif";
-            decomptersBeforeLaunch();
 
 
-        });
+        }, timeOutId);
+
+    };
 
 
+    /************************************************************************************/
+    /* ******************************** CODE PRINCIPAL **********************************/
+    /************************************************************************************/
+
+    firingStart.addEventListener("click", function clickStartButton () {
+        firingStart.removeEventListener("click", clickStartButton);
+        decomptersBeforeLaunch();
+    });
+
+    firingStop.addEventListener("click", () => {
+        clearInterval(interval);
+        firingStart.classList.remove("disabled");
+    });
+
+    firingReset.addEventListener("click", () => {
+        firingStart.removeEventListener("click", decomptersBeforeLaunch);
+        clearInterval(interval);
+        secondes = 10;
+        decompters.innerText = (`${secondes}`);
+        rocket.src = "images/rocket1.png";
+        firingStart.classList.remove("disabled");
+    });
 
 
 });
