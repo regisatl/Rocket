@@ -87,8 +87,8 @@ span#refresh-button {
 }
 
 #rocket.tookOff {
-    bottom: 600px;
-    left: 85%;
+    bottom: 800px;
+    left: 90%;
     transform: rotate(30deg) scale(0.5);
 }
 

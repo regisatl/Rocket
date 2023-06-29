@@ -18,7 +18,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     let secondes = 10;
-    let timeOutId = 1000;
+    let timeOutId = 500;
     let interval;
 
     /***********************************************************************************/
@@ -56,8 +56,7 @@ document.addEventListener("DOMContentLoaded", () => {
     /* ******************************** CODE PRINCIPAL **********************************/
     /************************************************************************************/
 
-    firingStart.addEventListener("click", function clickStartButton () {
-        firingStart.removeEventListener("click", clickStartButton);
+    firingStart.addEventListener("click", () => {
         decomptersBeforeLaunch();
     });
 
@@ -69,10 +68,8 @@ document.addEventListener("DOMContentLoaded", () => {
     firingReset.addEventListener("click", () => {
         firingStart.removeEventListener("click", decomptersBeforeLaunch);
         clearInterval(interval);
-        secondes = 10;
-        decompters.innerText = (`${secondes}`);
+        secondes = 0;
         rocket.src = "images/rocket1.png";
-        firingStart.classList.remove("disabled");
     });
 
 
